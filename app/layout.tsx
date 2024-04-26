@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/header";
 import Provider from "@/components/provider";
-
-const inter = Inter({ subsets: ["latin"] });
+import { amiri } from "@/utils/fonts";
 
 export const metadata: Metadata = {
   title: "Blog Cms",
@@ -19,11 +16,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} bg-amber-50 text-black dark:text-amber-50 dark:bg-slate-900`}
+        className={`${amiri.className} bg-amber-50 text-black dark:text-amber-50 dark:bg-slate-900`}
       >
         <Provider>
-          <Header />
-          <main className="max-w-5xl mx-auto h-auto px-6">{children}</main>
+          {children}
         </Provider>
       </body>
     </html>
