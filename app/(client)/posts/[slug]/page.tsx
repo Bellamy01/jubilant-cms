@@ -37,7 +37,7 @@ export default async function Page({ params: { slug } }: Params) {
                   width={800}
                   height={800}
                   alt={value.alt}
-                  className="w-full h-fit lg:h-[32rem] bg-center bg-cover my-5"
+                  className="w-full h-fit lg:h-[34rem] bg-center bg-cover my-5"
                 />
               ),
             },
