@@ -8,7 +8,7 @@ export const revalidate = 3600;
 export default async function Home() {
   const posts: Post[] = await getPosts();
   return (
-    <div className="grid grid-cols-1 gap-14">
+    <div className="grid grid-cols-1 gap-10 md:gap-14">
       <div>
         <h2 className="text-xl font-bold">Welcome to world of blogs.</h2>
         <p className="text-lg">
