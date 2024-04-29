@@ -5,7 +5,7 @@ export interface Post {
     body: any;
     author: Author;
     mainImage: { alt: string, asset: { url: string }  }
-    categories: Array<Category>;
+    category: Category;
     _id: string;
 }
 
