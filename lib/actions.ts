@@ -72,6 +72,30 @@ export async function getCategory(slug: string) {
   return data;
 }
 
+export async function getCategories() {
+  const query = `
+    *[_type=="category"] {
+        _id,
+        slug,
+        title,
+        description,
+    }`;
+
+  const data = await client.fetch(query);
+  return data;
+}
+
+export async function getNumOfPostsPerCategory(slug: string) {
+  const query = `
+    *[_type=="category" && slug.currrent=="${slug}"] {
+        title,
+        "postCount": count(*[_type=="post" && references("tags", ^._id)]),
+    }`;
+
+  const data = await client.fetch(query);
+  return data;
+}
+
 const builder = imageUrlBuilder(client);
 
 export const urlFor = (source: SanityImageSource) => builder.image(source);
