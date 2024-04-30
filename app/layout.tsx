@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${amiri.className} bg-amber-50 text-black dark:text-amber-100 dark:bg-slate-900`}
+        className={`${amiri.className} bg-amber-50 text-black dark:text-white dark:bg-slate-900`}
       >
         <Provider>
           {children}

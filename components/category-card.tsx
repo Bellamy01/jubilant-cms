@@ -5,7 +5,7 @@ export default function CategoryCard({ name, slug }: { name: string, slug: strin
     <div>
       <Link
         href={`/categories/${slug}`}
-        className="border bg-black/70 flex items-center justify-center py-2 rounded-full text-white"
+        className="bg-black/70 dark:bg-white dark:text-black flex items-center justify-center py-2 rounded-full text-white"
       >
         {name}
       </Link>
