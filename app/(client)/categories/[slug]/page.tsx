@@ -1,14 +1,35 @@
 import PostCard from "@/components/post-card";
-import SectionHeading from "@/components/section-heading";
-import { getCategory, getPostsPerCategory } from "@/lib/actions";
+import { getCategories, getCategory, getPostsPerCategory } from "@/lib/actions";
 import { Category, Post } from "@/lib/interfaces";
+import { Metadata } from "next";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { notFound } from "next/navigation";
+
+export async function generateMetadata({
+  params: { slug },
+}: Params): Promise<Metadata> {
+  const category: Category = await getCategory(slug);
+
+  return {
+    title: category.title,
+  };
+}
+
+export async function generateStaticParams() {
+  const categories = await getCategories();
+
+  return categories.map((category: Category) => ({
+    slug: category.slug.current,
+  }));
+}
 
 export default async function Page({ params: { slug } }: Params) {
   const posts: Post[] = await getPostsPerCategory(slug);
   const category: Category = await getCategory(slug);
-  console.log(posts);
-  console.log(category);
+
+  if (!category) {
+    return notFound();
+  }
 
   return (
     <div className="flex items-center justify-center gap-5 flex-col py-6 lg:py-12">

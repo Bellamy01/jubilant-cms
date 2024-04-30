@@ -1,15 +1,41 @@
-import { getPost } from "@/lib/actions";
+import { getPost, getPosts } from "@/lib/actions";
 import { Post } from "@/lib/interfaces";
 import { urlForImage } from "@/sanity/lib/image";
 import { PortableText } from "@portabletext/react";
 import { Metadata } from "next";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export const revalidate = 60;
 
+export async function generateMetadata({
+  params: { slug }} : Params): Promise<Metadata> {
+    const post: Post = await getPost(slug);
+
+    return {
+      title: post.title,
+      openGraph: {
+        images: urlForImage(post.mainImage.asset),
+        description: post.mainImage.alt,
+      },
+    };
+}
+
+export async function generateStaticParams() {
+  const posts = await getPosts();
+
+  return posts.map((post: Post) => ({
+    slug: post.slug.current,
+  }));
+}
+
 export default async function Page({ params: { slug } }: Params) {
   const post: Post = await getPost(slug);
+
+  if (!post) {
+    return notFound();
+  }
 
   return (
     <div className="flex items-center justify-center gap-5 flex-col py-6 lg:py-12">
@@ -60,7 +86,3 @@ export default async function Page({ params: { slug } }: Params) {
     </div>
   );
 }
-
-export const metadata: Metadata = {
-  title: `Post title`,
-};
